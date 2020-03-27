@@ -1,17 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+<center>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>weather</h1>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+<meta name="apple-mobile-web-app-title" content="CodePen">
+<link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+<link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+<title>CodePen - CSS Only Material Design Search Bar</title>
+<style>
+body {
+  background: #aaaaaa;
+  font-family: helvetica;
+  margin: 50px;
+}
 
+.search-bar {
+  height: 44px;
+  width: 200px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 20px;
+  position: relative;
+  background: #fff;
+}
+
+.input {
+  border: none;
+  height: 25px;
+  width: 150px;
+  color: #1b1b1b;
+  font-size: 15px;
+  outline: none;
+}
+
+.input:not(:placeholder-shown) + .label {
+  font-size: 9px;
+  top: 3px;
+  color: #00c853;
+}
+
+.input:focus ~ .label {
+  font-size: 9px;
+  top: 3px;
+  color: #4279a3;
+  transition: all 0.5s ease;
+}
+
+.label {
+  color: #aaaaaa;
+  position: absolute;
+  top: 13px;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.search-btn {
+  background: #4279a3;
+  border-radius: 20px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  justify-content: center;
+  cursor: pointer;
+  right: 2px;
+  position: absolute;
+  transition: all 1s ease;
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.icon-18 {
+  width: 18px;
+  height: 18px;
+}
+
+.highlight {
+  width: 0px;
+  height: 1px;
+  background: #4279a3;
+  position: absolute;
+  bottom: 8px;
+  transition: all 1s ease;
+}
+
+.input:focus ~ .highlight {
+  width: 150px;
+  transition: all 1s ease;
+}
+
+div.table_for_sentance {
+  margin-left: 270px;
+  margin-right: 270px;
+  border: hidden;
+}
+
+</style>
+<script>
+  window.console = window.console || function(t) {};
+</script>
+<script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+</head>
+<body translate="no">
+<svg style="display: none">
+<symbol id="magnify" viewBox="0 0 18 18" height="100%" width="100%">
+<path d="M12.5 11h-.8l-.3-.3c1-1.1 1.6-2.6 1.6-4.2C13 2.9 10.1 0          6.5 0S0 2.9 0 6.5 2.9 13 6.5 13c1.6 0 3.1-.6 4.2-1.6l.3.3v.8l5 5          1.5-1.5-5-5zm-6 0C4 11 2 9 2 6.5S4 2 6.5 2 11 4 11 6.5 9 11 6.5            11z" fill="#fff" fill-rule="evenodd" />
+</symbol>
+</svg>
+<br>
+<h1>Wikipedia</h1>
+<br>
 <form method="post">
     {% csrf_token %}
-    <input type="text" name="city">
-    <button type="submit">Submit</button>
-</form>
+<div class="search-bar">
 
+<input type="text" name="input" class="input" placeholder="&nbsp;">
+
+
+<span class="label">Weather API</span>
+<span class="highlight"></span>
+<div class="search-btn">
+<svg class="icon icon-18">
+<use xlink:href="#magnify"></use>
+
+</svg>
+</div>
+</div>
+</div>
+</form>
+<br>
+<br>
+<center><div class='table_for_sentance'>
+<h1>{{data}}</h1>
+</div></center>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 </body>
 </html>
+
+
+
+
+{% endblock %}

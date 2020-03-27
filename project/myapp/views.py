@@ -1,11 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-
-import json
-# urllib.request to make a request to api
-import urllib.request
-
+import wikipedia
+import requests, json
 
 def home(request):
     return render(request,'home.html')
@@ -51,38 +48,93 @@ def logout(request):
 
 
 def wikipedia(request):
+    #data = wikipedia.summary("Key (cryptography)")
 
-    data = request.POST.get('name')
-    import wikipedia
-    data = wikipedia.summary(data,sentences=2)
 
-    return render(request,'wikipedia.html',{'data':data})
+
+    return render(request,'wikipedia.html')
 
 def weather(request):
-    if request.method == 'POST':
-        city = request.POST['city']
-        ''' api key might be expired use your own api_key 
-            place api_key in place of appid ="your_api_key_here "  '''
+    data = request.POST.get('input',"")
+    print(data)
 
-        # source contain JSON data from API
+    # Python program to find current
+    # weather details of any city
+    # using openweathermap api
 
-        source = urllib.request.urlopen(
-            'http://api.openweathermap.org/data/2.5/weather?q ='
-            + city + '&appid = 00d1693ce529e18035487523049e4d8f').read()
+    # import required modules
 
-        # converting JSON data to a dictionary
-        list_of_data = json.loads(source)
 
-        # data for variable list_of_data
+    # Enter your API key here
+    api_key = "00d1693ce529e18035487523049e4d8f"
+
+    # base_url variable to store url
+    base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+    # Give city name
+    city_name = data
+
+    # complete_url variable to store
+    # complete url address
+    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+
+    # get method of requests module
+    # return response object
+    response = requests.get(complete_url)
+
+    # json method of response object
+    # convert json format data into
+    # python format data
+    x = response.json()
+
+    # Now x contains list of nested dictionaries
+    # Check the value of "cod" key is equal to
+    # "404", means city is found otherwise,
+    # city is not found
+    if x["cod"] != "404":
+        # store the value of "main"
+        # key in variable y
+        y = x["main"]
+
+        # store the value corresponding
+        # to the "temp" key of y
+        current_temperature = y["temp"]
+
+        # store the value corresponding
+        # to the "pressure" key of y
+        current_pressure = y["pressure"]
+
+        # store the value corresponding
+        # to the "humidity" key of y
+        current_humidiy = y["humidity"]
+
+        # store the value of "weather"
+        # key in variable z
+        z = x["weather"]
+
+        # store the value corresponding
+        # to the "description" key at
+        # the 0th index of z
+        weather_description = z[0]["description"]
+
+        # print following values
+        '''print(" Temperature (in kelvin unit) = " +
+              str(current_temperature) +
+              "\n atmospheric pressure (in hPa unit) = " +
+              str(current_pressure) +
+              "\n humidity (in percentage) = " +
+              str(current_humidiy) +
+              "\n description = " +
+              str(weather_description))'''
+
         data = {
-            "country_code": str(list_of_data['sys']['country']),
-            "coordinate": str(list_of_data['coord']['lon']) + ' '
-                          + str(list_of_data['coord']['lat']),
-            "temp": str(list_of_data['main']['temp']) + 'k',
-            "pressure": str(list_of_data['main']['pressure']),
-            "humidity": str(list_of_data['main']['humidity']),
+            'current_temperature': current_temperature,
+            'current_pressure': current_pressure,
+            "current_humidiy":current_humidiy,
+            "weather_description":weather_description
         }
-        print(data)
+
     else:
-        data = {}
-    return render(request,'weather.html',{'data':data})
+        error = "Sorry city not match"
+
+    return render(request,'weather.html',{"data":data})
