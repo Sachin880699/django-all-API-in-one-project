@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+<meta name="apple-mobile-web-app-title" content="CodePen">
+<link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+<link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+<title>CodePen - Typing Effect</title>
+<link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet">
+<style>
+body, html {
+  margin: 0;
+  height: 100%;
+  text-align: center;
+  font-family: 'Oxygen Mono', monospace;
+  color: #999;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 1pt;
+  font-size: 30pt;
+  margin-bottom: 15px;
+}
+
+p {
+  text-align: left;
+  margin: 0;
+  text-transform: lowercase;
+  font-size: 10pt;
+  font-weight: 900;
+  width: 50%;
+  display: none;
+}
+
+#table {
+  display: table;
+  width: 100%;
+  height: 100%;
+  background-color: #e5e5e5;
+}
+
+#centeralign {
+  display: table-cell;
+  vertical-align: middle;
+}
+</style>
+<script>
+  window.console = window.console || function(t) {};
+</script>
+<script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+</head>
+<body translate="no">
+<div id="table">
+<div id="centeralign">
+<h1>Sample typing effect.</h1>
+<p>मी कोणाच्याही नजरेत भरेन अशी आहे. सौंदर्याने अन सौष्ठवाने . पोरं साली पागल होतात !
+मग तिच्या नजरेत मी भरले, यात काय आश्चर्य !...
+तिच्या नजरेत ?... हंs ! तिच्या नजरेत !
+मी हा शब्द चुकून वापरलेला नाही. कळतंय ना ?
+आम्ही दोघी एकाच ठिकाणी नोकरी करतो. ती बाहेरगावची आहे. ती इतर मैत्रिणींबरोबर फ्लॅट घेऊन राहते. ती जॉईन झाली तेव्हाच आमची मैत्री झाली. आमच्या आवडीनिवडी सारख्याच. दोघीही निसर्गप्रेमी . मी तर शहरी निसर्ग पाहत वाढलेली; तर ती गावाकडची . अस्सल निसर्गसौंदर्य अनुभवत घडलेली.
+आम्ही सगळीकडेच बरोबर हिंडू - फिरू लागलो. शहरात येऊन तिला बरेच दिवस झालेले. तरुण पोरापोरींच्या सगळ्या शहरी सवयी तिने पटापट आत्मसात केल्या होत्या .
+ती जरा आडव्या बांध्याची आहे. गच्च भरलेली. रुंद खांद्यांची. पहिलवानी थाटात चालणारी;पण राहते टापटीप. दाट कुरळे केस आणि हसली की तिचे शुभ्र पांढरे, एकसारखे दात दिसतात. तिचं हसणंही मनापासून असतं. तिला खोटं वागणं जमत नाही.
+तिच्यामुळे पोरांना माझ्याभोवती फार घुटमळता येत नाही. ऑफिसमधली पोरं तिचा दुस्वास करतात. तिला माझी बॉडीगार्ड म्हणतात.अन आहेच ती.</p>
+</div>
+</div>
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script id="rendered-js">
+function typeEffect(element, speed) {
+  var text = element.innerHTML;
+  element.innerHTML = "";
+
+  var i = 0;
+  var timer = setInterval(function () {
+    if (i < text.length) {
+      element.append(text.charAt(i));
+      i++;
+    } else {
+      clearInterval(timer);
+    }
+  }, speed);
+}
+
+
+// application
+var speed = 75;
+var h1 = document.querySelector('h1');
+var p = document.querySelector('p');
+var delay = h1.innerHTML.length * speed + speed;
+
+// type affect to header
+typeEffect(h1, speed);
+
+
+// type affect to body
+setTimeout(function () {
+  p.style.display = "inline-block";
+  typeEffect(p, speed);
+}, delay);
+//# sourceURL=pen.js
+    </script>
+</body>
+</html>
+
+{% endblock %}
